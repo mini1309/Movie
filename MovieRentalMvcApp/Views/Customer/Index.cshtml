@@ -1,0 +1,82 @@
+﻿`@model IEnumerable<MovieRentalMvcApp.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customers</h2>
+<button class="btn btn-primary">@Html.ActionLink("NewCustomer", "New")</button>
+
+@*<a id="newBtn" style="margin-bottom:10px;" class="btn btn-primary" href="~/Views/Customer/New.cshtml">New Customer</a>*@
+@if (!Model.Any())
+{
+    <p>We don't have any customers yet</p>
+}
+else
+{
+
+    <table id="customers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Membership Type</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id })</td>
+                    @*<td>@Html.ActionLink("Delete", "Delete", new { customer.Id })</td>*@
+                    <td> <button data-customer-id="@customer.Id" type="button" class="btn btn-danger jq-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+@*@section scripts{
+
+    @Scripts.Render("~/render/")
+}*@
+
+
+@section scripts{
+    <script>
+        $(document).ready(function ()
+        {
+            $('#customers .jq-delete').on('click',function () {
+                var button = $(this)
+                if (confirm('Are you sure you want to delete?')) {
+                    $.ajax({
+                        url: '/api/customers/' + $(this).attr('data-customer-id'),
+                        method: 'DELETE',
+                        success: function () {
+                            button.parents('tr').remove()
+                            //console.log('success')
+                        }
+                    })
+                }
+                })
+            })
+        
+        </script>
+    }
+@*<script>
+    $(() => {
+        ('#btndelete').on('mouseout mouseover', () => {
+
+        })
+    })
+</script>*@
+
+
+    
+
+
+
+
+
+
+

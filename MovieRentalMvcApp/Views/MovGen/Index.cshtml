@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MovieRentalMvcApp.Models.Movie>
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.ActionLink("Movie", "New", new { @class = "btn btn-primary" })
+<table class="table">
+
+
+    <tr>
+
+        <td>MovieName</td>
+        <td>Id</td>
+        <td>ReleaseDate</td>
+        @*<td>DateAdded</td>*@
+        @*<td>CdStock</td>*@
+        <td>Genre</td>
+
+    </tr>
+    @foreach (var v in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(v.MovieName, "Details", new { v.Id })
+
+
+            </td>
+            <td>
+                @v.Id
+            </td>
+            <td>
+                @v.ReleaseDate
+
+            </td>
+            @*<td>
+                    @v.DateAdded
+                </td>*@
+            @*<td>
+                    @v.CdStock
+                </td>*@
+            <td>
+                @v.Genre.GenreName
+            </td>
+
+        </tr>
+
+    }
+
+</table>
+
+
+
+
+
